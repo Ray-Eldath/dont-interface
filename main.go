@@ -39,6 +39,7 @@ func main() {
 	fmt.Printf("    %d values returned from functions, %d of them are evil! (%s typed)\n", r.TotalResults, r.EvilResults, percentage(r.EvilResults, r.TotalResults))
 	fmt.Printf("    %d fields declared in structs, %d of them are evil! (%s typed)\n", r.TotalStructField, r.EvilStructField, percentage(r.EvilStructField, r.TotalStructField))
 	fmt.Printf("    %d values declared, %d of them are evil! (%s typed)\n", r.TotalValueDecl, r.EvilValueDecl, percentage(r.EvilValueDecl, r.TotalValueDecl))
+	fmt.Printf("    %d type aliases introduced, %d of them are evil! (%s typed)\n", r.TotalTypeAlias, r.EvilTypeAlias, percentage(r.EvilTypeAlias, r.TotalTypeAlias))
 	fmt.Printf("Overall, %s of your types are strictly typed (not interface{}).", sum(*r))
 }
 

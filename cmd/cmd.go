@@ -17,6 +17,9 @@ type Visitor struct {
 	TotalValueDecl int
 	EvilValueDecl  int
 
+	TotalTypeAlias int
+	EvilTypeAlias  int
+
 	TotalStructField int
 	EvilStructField  int
 }
@@ -49,6 +52,20 @@ func (v *Visitor) Visit(node ast.Node) ast.Visitor {
 		v.TotalValueDecl += 1
 		if _, ok := n.Type.(*ast.InterfaceType); ok {
 			v.EvilValueDecl += 1
+		}
+	case *ast.TypeSpec:
+		switch nn := n.Type.(type) {
+		case *ast.InterfaceType:
+			if nn.Methods == nil || nn.Methods.NumFields() <= 0 {
+				v.TotalTypeAlias += 1
+				v.EvilTypeAlias += 1
+			}
+		case *ast.StructType:
+			if nn.Fields == nil || nn.Fields.NumFields() <= 0 {
+				v.TotalTypeAlias += 1
+			}
+		default:
+			v.TotalTypeAlias += 1
 		}
 	case *ast.StructType:
 		fields := n.Fields
@@ -84,6 +101,7 @@ func Calculate(paths []string) (*Visitor, error) {
 	for _, path := range paths {
 		p, _ := filepath.Abs(path)
 		f, err := parser.ParseFile(fset, p, nil, parser.AllErrors)
+		// ast.Print(fset, f)
 		if err != nil {
 			return nil, err
 		}

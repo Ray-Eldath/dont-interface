@@ -18,3 +18,8 @@ type test3 struct {
 type I interface {
 	test4(f float64, inter7 interface{}, inter8 ...interface{}) (iii interface{}, sss string)
 }
+
+type T1 interface{}
+type T2 string
+type T3 struct{}
+type I1 interface{ test1() }

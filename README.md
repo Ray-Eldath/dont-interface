@@ -7,7 +7,8 @@ Among your codebase, there are...
     5 values returned from functions, 3 of them are evil! (40.00% typed)
     3 fields declared in structs, 2 of them are evil! (33.33% typed)
     2 values declared, 1 of them are evil! (50.00% typed)
-Overall, 38.89% of your types are typed (not interface{}).
+    3 type aliases introduced, 1 of them are evil! (66.67% typed)
+Overall, 42.86% of your types are strictly typed (not interface{}).
 ```
 
 `dont-interface` calculates how many `interface{}` are declared or used in:
@@ -16,6 +17,7 @@ Overall, 38.89% of your types are typed (not interface{}).
 - function return values, e.g. `(interface{}, string)`
 - struct fields, e.g. `i interface{}`
 - value declarations, e.g. `var i interface{}`
+- type aliases, e.g. `type NotInterface interface{}`. Note that `type I1 interface{ test1() }` is _not_ a type alias.
 
 This tiny snippet is partially inspired by Section 4.1.1
 of [LLVM: A Compilation Framework for Lifelong Program Analysis & Transformation](https://doi.org/10.1109/CGO.2004.1281665)
